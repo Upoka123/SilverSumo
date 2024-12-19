@@ -1,0 +1,6 @@
+name: SilverSumo
+version: '1.0-SNAPSHOT'
+main: me.upoka.silverSumo.SilverSumo
+api-version: '1.21'
+commands:
+  sumo:
