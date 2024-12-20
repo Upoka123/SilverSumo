@@ -1,19 +1,18 @@
-prefix: '&6SilverSumo'
+prefix: '&8[§x§0§8§F§B§7§1S§x§0§B§E§B§7§0u§x§0§D§D§A§7§0m§x§1§0§C§A§6§Fo&8] &7»'
 
 minimum: 2
-maximum: 10
+maximum: 150
 
-waiting: 30
+waiting: 180
 
 notifications:
+  - 160
+  - 120
+  - 60
   - 30
-  - 20
   - 15
   - 10
   - 5
-  - 4
-  - 3
-  - 2
   - 1
 
 delay: 10
@@ -22,29 +21,29 @@ countdown: 5
 
 
 win-commands:
-  - 'give %winner% minecraft:stone 1'
-  - 'give %winner% minecraft:acacia_button 1'
+  - 'crate key give %winner% dolphin 2'
+  - 'eco give %winner% 15000'
 
 messages:
-  no-permission: '%prefix% &cNincs jogod ehhez!'
-  advertiser: '%prefix% &fHamarosan Cica Sumo event indul! Kattints &6&l[Ide]&f a csatlakozáshoz!'
-  already-going: '%prefix% &cAz aréna már el van indítva!'
-  you-started-it: '%prefix% &aElindítottad az arénát!'
-  not-exist-arena: '%prefix% &cNincs ilyen aréna helyszín. Lehetőségek: &f<spawn | lobby | arena1 | arena2>&c.'
-  location-set: '%prefix% &aSikeresen beállítottad a &f%place%&a teleportációs pontot'
-  start-soon: '%prefix% &aAz aréna &f%mp%&a másodperc múlva indul.'
+  no-permission: '%prefix% &fYou &c&ndont&f have permission to do that!'
+  advertiser: '%prefix% &fThere will be a Sumo event soon! Click &6&l[Here]&f to join!'
+  already-going: '%prefix% &fThe Sumo has been &c&nalready&f started!'
+  you-started-it: '%prefix% &fYou have just &a&nstarted&f a Sumo event!'
+  not-exist-arena: '%prefix% &fThere &c&nisnt&f any arena called that. &7Options: &f<spawn | lobby | arena1 | arena2>&c.'
+  location-set: '%prefix% &fYou have &a&nsuccessfully&f placed the &c&n%place%&a as the teleportation point!'
+  start-soon: '%prefix% &fThe Sumo will start in &c&n%mp%&f seconds.'
 
-  reload-successfully: '%prefix% &aA konfiguráció sikeresen újra töltve'
-  reload-unsuccessful: '%prefix% &cA konfiguráció újratöltése sikertelen!'
+  reload-successfully: '%prefix% &aThe configuration has been reloaded!'
+  reload-unsuccessful: '%prefix% &cCouldnt load the configuration because of an error!'
 
-  event-end: '%prefix% &aAz eventnek vége. Visszateleportáltunk a spawnra.'
+  event-end: '%prefix% &aThe event ended. We teleported you back to spawn!'
 
-  round-won: '%prefix% &aMegnyerted ezt a kört!'
-  lost: '%prefix% &cVesztettél. Majd legközelebb!'
-  arena-won: '%prefix% &aMegnyerted az arénát!'
+  round-won: '%prefix% &fYou &a&nwon&f this roound!'
+  lost: '%prefix% &fYou &c&nlost.&f Better luck next time!'
+  arena-won: '%prefix% &fYou &awon &fthe sumo event!'
   won-broadcast: '%prefix% &f%winner%&a megnyerte a Sumo arénát!'
-  not-started: '%prefix% &cJelenleg nem megy sumo aréna!'
-  player-joined: '%prefix% &a%player%&f csatlakozott az arénába! (%joinedplayers%&7/&f%maxplayers%)'
-  join: '%prefix% &cCsatlakoztál az arénába! &f(%joinedplayers%&7/&f%maxplayers%)'
-  already-joined: '%prefix% &cMár csatlakoztál az arénába!'
-  not-enough-player: '%prefix% &cNincs elegendő játékos az indításhoz.'
+  not-started: '%prefix% &fThere isnt a &c&nSumo&f event right now!'
+  player-joined: '%prefix% &c&n%player%&f has joined the arena! &7(&f%joinedplayers%&8/&f%maxplayers%&7)'
+  join: '%prefix% &fYou joined to the &c&nSumo &fevent! &7(&f%joinedplayers%&8/&f%maxplayers%&7)'
+  already-joined: '%prefix% &fYou &c&nalready&f joined to the sumo event!'
+  not-enough-player: '%prefix% &cThere isnt enough players to start the event!'
