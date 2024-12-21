@@ -203,10 +203,13 @@ public class SilverSumo extends JavaPlugin {
             if(args[0].equalsIgnoreCase("stop")) {
                 if(!ingame) {
                     player.sendMessage(messageFormatter(getConfig().getString("messages.not-started")));
+                } else {
+                    stop();
+                    player.sendMessage(messageFormatter(getConfig().getString("messages.event-ended")));
                 }
-                stop();
                 return true;
             }
+
 
 
             if(args[0].equalsIgnoreCase("set")) {
@@ -298,7 +301,12 @@ public class SilverSumo extends JavaPlugin {
 
 
     public void stop() {
-        for(Player p : joinedPlayers) {
+        // Leállítja az alert scheduler-t
+        if (alertSched != -1) {
+            Bukkit.getScheduler().cancelTask(alertSched);
+        }
+
+        for (Player p : joinedPlayers) {
             p.teleport(location_fs.getConfig("locations.yml").getLocation("spawn"));
             p.sendMessage(messageFormatter(getConfig().getString("messages.event-end")));
             freeze.freeze(p, false);
