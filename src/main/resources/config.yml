@@ -37,6 +37,7 @@ messages:
   reload-unsuccessful: '%prefix% &cCouldnt load the configuration because of an error!'
 
   event-end: '%prefix% &aThe event ended. We teleported you back to spawn!'
+  event-ended: "%prefix% &cThe Sumo event has been stopped by an admin."
 
   round-won: '%prefix% &fYou &a&nwon&f this roound!'
   lost: '%prefix% &fYou &c&nlost.&f Better luck next time!'
