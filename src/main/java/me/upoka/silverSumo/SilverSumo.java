@@ -174,26 +174,33 @@ public class SilverSumo extends JavaPlugin {
                 return true;
             }
 
-            joinedPlayers.remove(player);
-            player.teleport(location_fs.getConfig("locations.yml").getLocation("lobby"));
-            player.sendMessage(messageFormatter(getConfig().getString("messages.leave-game"))
-                    .replace("%joinedplayers%", String.valueOf(joinedPlayers.size()))
-                    .replace("%maxplayers%", String.valueOf(maxPlayers)));
-
-            for (Player p : joinedPlayers) {
-                p.sendMessage(messageFormatter(getConfig().getString("messages.player-left")
-                        .replace("%player%", player.getName())
+            if (ingame && inArenaPlayers.contains(player)) {
+                Player opponent = inArenaPlayers.get(0).equals(player) ? inArenaPlayers.get(1) : inArenaPlayers.get(0);
+                lose(opponent);
+                player.sendMessage(messageFormatter(getConfig().getString("messages.player-left-during-combat")));
+            } else {
+                joinedPlayers.remove(player);
+                player.teleport(location_fs.getConfig("locations.yml").getLocation("lobby"));
+                player.sendMessage(messageFormatter(getConfig().getString("messages.leave-game"))
                         .replace("%joinedplayers%", String.valueOf(joinedPlayers.size()))
-                        .replace("%maxplayers%", String.valueOf(maxPlayers))));
-            }
+                        .replace("%maxplayers%", String.valueOf(maxPlayers)));
 
-            if (joinedPlayers.size() < getConfig().getInt("minimum")) {
-                Bukkit.getScheduler().cancelTask(startSched);
-                player.sendMessage(messageFormatter(getConfig().getString("messages.not-enough-player")));
+                for (Player p : joinedPlayers) {
+                    p.sendMessage(messageFormatter(getConfig().getString("messages.player-left")
+                            .replace("%player%", player.getName())
+                            .replace("%joinedplayers%", String.valueOf(joinedPlayers.size()))
+                            .replace("%maxplayers%", String.valueOf(maxPlayers))));
+                }
+
+                if (joinedPlayers.size() < getConfig().getInt("minimum")) {
+                    Bukkit.getScheduler().cancelTask(startSched);
+                    player.sendMessage(messageFormatter(getConfig().getString("messages.not-enough-player")));
+                }
             }
 
             return true;
         }
+
 
         if(player.hasPermission("sumo.admin")) {
             if(args[0].equalsIgnoreCase("start")) {
