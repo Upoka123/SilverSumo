@@ -13,7 +13,7 @@ public class TabCompletion implements TabCompleter {
     public TabCompletion(SilverSumo main) {	}
 
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
-        List<String> argsList = Arrays.asList("start", "stop", "join", "set", "info", "reload");
+        List<String> argsList = Arrays.asList("start", "stop", "join", "set", "info", "reload", "leave");
         List<String> setArgsList = Arrays.asList("spawn", "lobby", "arena1", "arena2");
         if(args.length == 1) {
             Collections.sort(argsList);

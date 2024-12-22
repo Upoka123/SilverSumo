@@ -1,9 +1,10 @@
 me\upoka\silverSumo\FileManager.class
 me\upoka\silverSumo\TabCompletion.class
-me\upoka\silverSumo\SilverSumo$1.class
 me\upoka\silverSumo\PlayerMoveEventHandler.class
 me\upoka\silverSumo\SilverSumo$3.class
 me\upoka\silverSumo\SilverSumo.class
 me\upoka\silverSumo\SilverSumo$2.class
-me\upoka\silverSumo\Freeze.class
 me\upoka\silverSumo\LeaveHandler.class
+me\upoka\silverSumo\SilverSumo$1.class
+me\upoka\silverSumo\PlayerQuitListener.class
+me\upoka\silverSumo\Freeze.class

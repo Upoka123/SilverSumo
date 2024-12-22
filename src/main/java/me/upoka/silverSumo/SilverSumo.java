@@ -48,6 +48,7 @@ public class SilverSumo extends JavaPlugin {
         getServer().getPluginManager().registerEvents(freeze, this);
         getServer().getPluginManager().registerEvents(move, this);
         getServer().getPluginManager().registerEvents(leavehandler, this);
+        getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
     }
 
     public void onDisable() {
@@ -62,7 +63,7 @@ public class SilverSumo extends JavaPlugin {
 
 
 
-    private List<String> argsList = Arrays.asList("start", "stop", "join", "set", "info", "reload");
+    private List<String> argsList = Arrays.asList("start", "stop", "join", "set", "info", "reload", "leave");
     private List<String> locationList = Arrays.asList("spawn", "lobby", "arena1", "arena2");
     public ArrayList<Player> joinedPlayers = new ArrayList<>();
     private int maxPlayers = getConfig().getInt("maximum");
@@ -167,8 +168,32 @@ public class SilverSumo extends JavaPlugin {
             return true;
         }
 
+        if(args[0].equalsIgnoreCase("leave")) {
+            if (!joinedPlayers.contains(player)) {
+                player.sendMessage(messageFormatter(getConfig().getString("messages.not-in-game")));
+                return true;
+            }
 
+            joinedPlayers.remove(player);
+            player.teleport(location_fs.getConfig("locations.yml").getLocation("lobby"));
+            player.sendMessage(messageFormatter(getConfig().getString("messages.leave-game"))
+                    .replace("%joinedplayers%", String.valueOf(joinedPlayers.size()))
+                    .replace("%maxplayers%", String.valueOf(maxPlayers)));
 
+            for (Player p : joinedPlayers) {
+                p.sendMessage(messageFormatter(getConfig().getString("messages.player-left")
+                        .replace("%player%", player.getName())
+                        .replace("%joinedplayers%", String.valueOf(joinedPlayers.size()))
+                        .replace("%maxplayers%", String.valueOf(maxPlayers))));
+            }
+
+            if (joinedPlayers.size() < getConfig().getInt("minimum")) {
+                Bukkit.getScheduler().cancelTask(startSched);
+                player.sendMessage(messageFormatter(getConfig().getString("messages.not-enough-player")));
+            }
+
+            return true;
+        }
 
         if(player.hasPermission("sumo.admin")) {
             if(args[0].equalsIgnoreCase("start")) {
@@ -203,10 +228,13 @@ public class SilverSumo extends JavaPlugin {
             if(args[0].equalsIgnoreCase("stop")) {
                 if(!ingame) {
                     player.sendMessage(messageFormatter(getConfig().getString("messages.not-started")));
+                } else {
+                    stop();
+                    player.sendMessage(messageFormatter(getConfig().getString("messages.event-ended")));
                 }
-                stop();
                 return true;
             }
+
 
 
             if(args[0].equalsIgnoreCase("set")) {
@@ -298,7 +326,12 @@ public class SilverSumo extends JavaPlugin {
 
 
     public void stop() {
-        for(Player p : joinedPlayers) {
+        // Leállítja az alert scheduler-t
+        if (alertSched != -1) {
+            Bukkit.getScheduler().cancelTask(alertSched);
+        }
+
+        for (Player p : joinedPlayers) {
             p.teleport(location_fs.getConfig("locations.yml").getLocation("spawn"));
             p.sendMessage(messageFormatter(getConfig().getString("messages.event-end")));
             freeze.freeze(p, false);
@@ -342,5 +375,9 @@ public class SilverSumo extends JavaPlugin {
     }
     public ArrayList<Player> getInArenaPlayers() {
         return inArenaPlayers;
+    }
+
+    public int getMaxPlayers() {
+        return maxPlayers;
     }
 }
